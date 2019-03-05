@@ -28,7 +28,6 @@ class HttpProxyRepository extends PackageRepository {
 
     http.Response response = await client.get(versionUrl);
     var json = convert.json.decode(response.body);
-   // var versions = json['versions'] as List<Map>;
     var versions = json['versions'] as List<dynamic>;
     if (versions != null) {
       for (var item in versions) {
@@ -49,7 +48,7 @@ class HttpProxyRepository extends PackageRepository {
         .where((v) => v.packageName == package && v.versionString == version)
         .toList()
         .then((List<PackageVersion> versions) {
-      if (versions.length >= 1) return versions.first;
+      if (versions.isNotEmpty) return versions.first;
       return null;
     });
   }
